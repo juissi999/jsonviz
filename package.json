@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/juissi999/jsonviz/issues"
   },
-  "homepage": "https://github.com/juissi999/jsonviz#readme"
+  "homepage": "https://github.com/juissi999/jsonviz#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
