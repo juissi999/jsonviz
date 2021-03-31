@@ -44,6 +44,8 @@ const createGraph = (jsonStrRaw) => {
 }
 
 const crawlJson = (jsonObj, parentId, label, newNodes, newEdges) => {
+  const showLeaves = document.getElementById('leaveschkbx').checked
+
   const isArray = Array.isArray(jsonObj)
   const isObj = isObject(jsonObj)
 
@@ -83,7 +85,9 @@ const crawlJson = (jsonObj, parentId, label, newNodes, newEdges) => {
     const keys = Object.keys(jsonObj)
     keys.map((key) => crawlJson(jsonObj[key], nodeId, key, newNodes, newEdges))
   } else {
-    newNodes.push({ id: nodeId, shape: 'diamond', label: jsonObj })
+    if (showLeaves) {
+      newNodes.push({ id: nodeId, shape: 'diamond', label: jsonObj })
+    }
   }
 }
 
@@ -116,3 +120,8 @@ document.getElementById('clearbtn').addEventListener('click', () => {
   document.getElementById('jsonstr').value = ''
   createGraph('')
 })
+document
+  .getElementById('leaveschkbx')
+  .addEventListener('change', () =>
+    createGraph(document.getElementById('jsonstr').value)
+  )
