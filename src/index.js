@@ -2,16 +2,20 @@ import { Network } from 'vis-network'
 import { DataSet } from 'vis-data'
 import { v4 } from 'uuid'
 
-const onClick = () => {
+const onCreateClick = () => {
   const newNodes = []
   const newEdges = []
 
+  let myJsonRaw = document.getElementById('jsonstr').value
+  myJsonRaw = myJsonRaw.replace(/\'/g, '"')
+  const myJson = JSON.parse(myJsonRaw)
+
   crawlJson(myJson, null, null, newNodes, newEdges)
 
-  // create an array with nodes
+  // create an array for nodes
   const nodes = new DataSet(newNodes)
 
-  // create an array with edges
+  // create an array for edges
   const edges = new DataSet(newEdges)
 
   // create a network
@@ -69,17 +73,22 @@ const crawlJson = (jsonObj, parentId, label, newNodes, newEdges) => {
   }
 }
 
-const myJson = {
-  cities: [
-    { name: 'Helsinki', country: 'Finland' },
-    { name: 'Berlin', country: 'Germany' },
-    { name: 'Paris', country: 'France' }
-  ],
-  pets: ['duck', 'whale']
-}
-
 const isObject = (obj) => {
   return Object.prototype.toString.call(obj) === '[object Object]'
 }
 
-document.getElementById('createbtn').addEventListener('click', onClick)
+const resetTextBox = () => {
+  const sampleJSON = `{
+    'cities': [
+      { 'name': 'Helsinki', 'country': 'Finland' },
+      { 'name': 'Berlin', 'country': 'Germany' },
+      { 'name': 'Paris', 'country': 'France' }
+    ],
+    'pets': ['duck', 'whale']
+  }`
+
+  document.getElementById('jsonstr').value = sampleJSON
+}
+
+resetTextBox()
+document.getElementById('createbtn').addEventListener('click', onCreateClick)
