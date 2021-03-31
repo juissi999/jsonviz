@@ -1,0 +1,2 @@
+# jsonviz
+JSON structure visualizer
