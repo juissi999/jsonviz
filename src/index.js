@@ -2,31 +2,45 @@ import { Network } from 'vis-network'
 import { DataSet } from 'vis-data'
 import { v4 } from 'uuid'
 
-const onCreateClick = () => {
+const createGraph = (jsonStrRaw) => {
+  const container = document.getElementById('app')
+
+  const options = {}
   const newNodes = []
   const newEdges = []
 
-  let myJsonRaw = document.getElementById('jsonstr').value
-  myJsonRaw = myJsonRaw.replace(/\'/g, '"')
-  const myJson = JSON.parse(myJsonRaw)
+  // process JSON
+  jsonStrRaw = jsonStrRaw.replace(/\'/g, '"')
 
-  crawlJson(myJson, null, null, newNodes, newEdges)
+  try {
+    const myJson = JSON.parse(jsonStrRaw)
 
-  // create an array for nodes
-  const nodes = new DataSet(newNodes)
+    crawlJson(myJson, null, null, newNodes, newEdges)
 
-  // create an array for edges
-  const edges = new DataSet(newEdges)
+    // create an array for nodes
+    const nodes = new DataSet(newNodes)
 
-  // create a network
-  const container = document.getElementById('app')
-  const data = {
-    nodes: nodes,
-    edges: edges
+    // create an array for edges
+    const edges = new DataSet(newEdges)
+
+    // create a network
+
+    const data = {
+      nodes: nodes,
+      edges: edges
+    }
+
+    new Network(container, data, options)
+  } catch (error) {
+    return new Network(
+      container,
+      {
+        nodes: [],
+        edges: []
+      },
+      options
+    )
   }
-  const options = {}
-
-  new Network(container, data, options)
 }
 
 const crawlJson = (jsonObj, parentId, label, newNodes, newEdges) => {
@@ -91,4 +105,14 @@ const resetTextBox = () => {
 }
 
 resetTextBox()
-document.getElementById('createbtn').addEventListener('click', onCreateClick)
+createGraph(document.getElementById('jsonstr').value)
+
+document
+  .getElementById('createbtn')
+  .addEventListener('click', () =>
+    createGraph(document.getElementById('jsonstr').value)
+  )
+document.getElementById('clearbtn').addEventListener('click', () => {
+  document.getElementById('jsonstr').value = ''
+  createGraph('')
+})
