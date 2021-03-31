@@ -5,9 +5,19 @@ import { v4 } from 'uuid'
 const createGraph = (jsonStrRaw) => {
   const container = document.getElementById('app')
 
-  const options = {}
+  let options = {}
   const newNodes = []
   const newEdges = []
+
+  if (document.getElementById('hierarchychkbx').checked) {
+    options = {
+      layout: {
+        hierarchical: {
+          direction: 'UD'
+        }
+      }
+    }
+  }
 
   // process JSON
   jsonStrRaw = jsonStrRaw.replace(/\'/g, '"')
@@ -15,7 +25,7 @@ const createGraph = (jsonStrRaw) => {
   try {
     const myJson = JSON.parse(jsonStrRaw)
 
-    crawlJson(myJson, null, null, newNodes, newEdges)
+    crawlJson(myJson, null, null, newNodes, newEdges, 0)
 
     // create an array for nodes
     const nodes = new DataSet(newNodes)
@@ -43,7 +53,7 @@ const createGraph = (jsonStrRaw) => {
   }
 }
 
-const crawlJson = (jsonObj, parentId, label, newNodes, newEdges) => {
+const crawlJson = (jsonObj, parentId, label, newNodes, newEdges, level) => {
   const showLeaves = document.getElementById('leaveschkbx').checked
 
   const isArray = Array.isArray(jsonObj)
@@ -63,13 +73,16 @@ const crawlJson = (jsonObj, parentId, label, newNodes, newEdges) => {
 
     newNodes.push({
       id: nodeId,
+      level,
       label: 'Array',
       shape: 'box',
       color: parentId ? color : '#C2FABC',
       heightConstraint: parentId ? undefined : { minimum: 100 },
       widthConstraint: parentId ? undefined : { minimum: 100 }
     })
-    jsonObj.map((item) => crawlJson(item, nodeId, null, newNodes, newEdges))
+    jsonObj.map((item) =>
+      crawlJson(item, nodeId, null, newNodes, newEdges, level + 1)
+    )
   } else if (isObj) {
     let color = '#fcfcab' //'#FFFF00'
     if (Object.keys(jsonObj).length === 0) {
@@ -78,15 +91,18 @@ const crawlJson = (jsonObj, parentId, label, newNodes, newEdges) => {
 
     newNodes.push({
       id: nodeId,
+      level,
       label: 'Object',
       color: parentId ? color : '#C2FABC',
       shape: 'circle'
     })
     const keys = Object.keys(jsonObj)
-    keys.map((key) => crawlJson(jsonObj[key], nodeId, key, newNodes, newEdges))
+    keys.map((key) =>
+      crawlJson(jsonObj[key], nodeId, key, newNodes, newEdges, level + 1)
+    )
   } else {
     if (showLeaves) {
-      newNodes.push({ id: nodeId, shape: 'diamond', label: jsonObj })
+      newNodes.push({ id: nodeId, level, shape: 'diamond', label: jsonObj })
     }
   }
 }
@@ -122,6 +138,11 @@ document.getElementById('clearbtn').addEventListener('click', () => {
 })
 document
   .getElementById('leaveschkbx')
+  .addEventListener('change', () =>
+    createGraph(document.getElementById('jsonstr').value)
+  )
+document
+  .getElementById('hierarchychkbx')
   .addEventListener('change', () =>
     createGraph(document.getElementById('jsonstr').value)
   )
