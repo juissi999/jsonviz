@@ -9,6 +9,7 @@ const createGraph = (jsonStrRaw) => {
   const newNodes = []
   const newEdges = []
 
+  // if hierarchical selected, change options
   if (document.getElementById('hierarchychkbx').checked) {
     options = {
       layout: {
@@ -23,6 +24,7 @@ const createGraph = (jsonStrRaw) => {
   jsonStrRaw = jsonStrRaw.replace(/\'/g, '"')
 
   try {
+    // try to parse JSON, if it fails, catch it
     const myJson = JSON.parse(jsonStrRaw)
 
     crawlJson(myJson, null, null, newNodes, newEdges, 0)
@@ -40,9 +42,11 @@ const createGraph = (jsonStrRaw) => {
       edges: edges
     }
 
+    // create graph
     new Network(container, data, options)
   } catch (error) {
-    return new Network(
+    // create empty graph
+    new Network(
       container,
       {
         nodes: [],
@@ -54,6 +58,8 @@ const createGraph = (jsonStrRaw) => {
 }
 
 const crawlJson = (jsonObj, parentId, label, newNodes, newEdges, level) => {
+  // recursive crawling function that goes through JSON
+
   const showLeaves = document.getElementById('leaveschkbx').checked
 
   const isArray = Array.isArray(jsonObj)
@@ -61,10 +67,12 @@ const crawlJson = (jsonObj, parentId, label, newNodes, newEdges, level) => {
 
   const nodeId = v4()
 
+  // edge to parent when not root element
   if (parentId) {
     newEdges.push({ from: parentId, to: nodeId, arrows: 'to', label })
   }
 
+  // process different node-types of JSON
   if (isArray) {
     let color = '#6E6EFD'
     if (jsonObj.length === 0) {
@@ -108,6 +116,7 @@ const crawlJson = (jsonObj, parentId, label, newNodes, newEdges, level) => {
 }
 
 const isObject = (obj) => {
+  // test if object is an object and not e.g. array, return bool
   return Object.prototype.toString.call(obj) === '[object Object]'
 }
 
@@ -124,9 +133,7 @@ const resetTextBox = () => {
   document.getElementById('jsonstr').value = sampleJSON
 }
 
-resetTextBox()
-createGraph(document.getElementById('jsonstr').value)
-
+// define callback-functions for DOM-elements
 document
   .getElementById('createbtn')
   .addEventListener('click', () =>
@@ -146,3 +153,7 @@ document
   .addEventListener('change', () =>
     createGraph(document.getElementById('jsonstr').value)
   )
+
+// initial graph
+resetTextBox()
+createGraph(document.getElementById('jsonstr').value)
