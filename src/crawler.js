@@ -32,6 +32,8 @@ const crawlJson = (
     newEdges.push({ from: parentId, to: nodeId, arrows: 'to', label })
   }
 
+  const newNode = { id: nodeId, level, font: parentId ? undefined : ROOTFONT }
+
   // process different node-types of JSON
   if (isArray) {
     let color = ARRAYCOLOR
@@ -40,12 +42,10 @@ const crawlJson = (
     }
 
     newNodes.push({
-      id: nodeId,
-      level,
+      ...newNode,
       label: 'Array',
       shape: ARRAYSHAPE,
-      color: parentId ? color : ROOTCOLOR,
-      font: parentId ? undefined : ROOTFONT
+      color: parentId ? color : ROOTCOLOR
     })
     jsonObj.map((item) =>
       crawlJson(item, nodeId, null, newNodes, newEdges, level + 1, showLeaves)
@@ -57,11 +57,9 @@ const crawlJson = (
     }
 
     newNodes.push({
-      id: nodeId,
-      level,
+      ...newNode,
       label: 'Object',
       color: parentId ? color : ROOTCOLOR,
-      font: parentId ? undefined : ROOTFONT,
       shape: OBJECTSHAPE
     })
     const keys = Object.keys(jsonObj)
@@ -79,11 +77,9 @@ const crawlJson = (
   } else {
     if (showLeaves) {
       newNodes.push({
-        id: nodeId,
-        level,
+        ...newNode,
         color: LEAFCOLOR,
         shape: LEAFSHAPE,
-        font: parentId ? undefined : ROOTFONT,
         label: jsonObj.toString()
       })
     }
