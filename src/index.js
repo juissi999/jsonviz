@@ -1,13 +1,11 @@
 import { Network } from 'vis-network'
 import { DataSet } from 'vis-data'
-import { v4 } from 'uuid'
+import { crawlJson } from './crawler'
 
 const createGraph = (jsonStrRaw) => {
   const container = document.getElementById('app')
 
   let options = {}
-  const newNodes = []
-  const newEdges = []
 
   // if hierarchical selected, change options
   if (document.getElementById('hierarchychkbx').checked) {
@@ -27,7 +25,10 @@ const createGraph = (jsonStrRaw) => {
     // try to parse JSON, if it fails, catch it
     const myJson = JSON.parse(jsonStrRaw)
 
-    crawlJson(myJson, null, null, newNodes, newEdges, 0)
+    const showLeaves = document.getElementById('leaveschkbx').checked
+    const newNodes = []
+    const newEdges = []
+    crawlJson(myJson, null, null, newNodes, newEdges, 0, showLeaves)
 
     // create an array for nodes
     const nodes = new DataSet(newNodes)
@@ -45,7 +46,9 @@ const createGraph = (jsonStrRaw) => {
     // create graph
     new Network(container, data, options)
   } catch (error) {
-    // create empty graph
+    // something went wrong, create empty graph
+    console.log(error)
+
     new Network(
       container,
       {
@@ -55,74 +58,6 @@ const createGraph = (jsonStrRaw) => {
       options
     )
   }
-}
-
-const crawlJson = (jsonObj, parentId, label, newNodes, newEdges, level) => {
-  // recursive crawling function that goes through JSON
-
-  const showLeaves = document.getElementById('leaveschkbx').checked
-
-  const isArray = Array.isArray(jsonObj)
-  const isObj = isObject(jsonObj)
-
-  const nodeId = v4()
-
-  // edge to parent when not root element
-  if (parentId) {
-    newEdges.push({ from: parentId, to: nodeId, arrows: 'to', label })
-  }
-
-  // process different node-types of JSON
-  if (isArray) {
-    let color = '#6E6EFD'
-    if (jsonObj.length === 0) {
-      color = '#FB7E81'
-    }
-
-    newNodes.push({
-      id: nodeId,
-      level,
-      label: 'Array',
-      shape: 'box',
-      color: parentId ? color : '#C2FABC',
-      heightConstraint: parentId ? undefined : { minimum: 100 },
-      widthConstraint: parentId ? undefined : { minimum: 100 }
-    })
-    jsonObj.map((item) =>
-      crawlJson(item, nodeId, null, newNodes, newEdges, level + 1)
-    )
-  } else if (isObj) {
-    let color = '#fcfcab' //'#FFFF00'
-    if (Object.keys(jsonObj).length === 0) {
-      color = '#FB7E81'
-    }
-
-    newNodes.push({
-      id: nodeId,
-      level,
-      label: 'Object',
-      color: parentId ? color : '#C2FABC',
-      shape: 'circle'
-    })
-    const keys = Object.keys(jsonObj)
-    keys.map((key) =>
-      crawlJson(jsonObj[key], nodeId, key, newNodes, newEdges, level + 1)
-    )
-  } else {
-    if (showLeaves) {
-      newNodes.push({
-        id: nodeId,
-        level,
-        shape: 'diamond',
-        label: jsonObj.toString()
-      })
-    }
-  }
-}
-
-const isObject = (obj) => {
-  // test if object is an object and not e.g. array, return bool
-  return Object.prototype.toString.call(obj) === '[object Object]'
 }
 
 const resetTextBox = () => {
