@@ -20,8 +20,8 @@ const createGraph = (jsonStrRaw) => {
     }
   }
 
-  // process JSON
-  jsonStrRaw = jsonStrRaw.replace(/\'/g, '"')
+  // preprocess JSON in case it would use ' instead of "
+  // jsonStrRaw = jsonStrRaw.replace(/\'/g, '"')
 
   try {
     // try to parse JSON, if it fails, catch it
@@ -127,12 +127,12 @@ const isObject = (obj) => {
 
 const resetTextBox = () => {
   const sampleJSON = `{
-    'cities': [
-      { 'name': 'Helsinki', 'country': 'Finland' },
-      { 'name': 'Berlin', 'country': 'Germany' },
-      { 'name': 'Paris', 'country': 'France' }
+    "cities": [
+      { "name": "Helsinki", "country": "Finland" },
+      { "name": "Berlin", "country": "Germany" },
+      { "name": "Paris", "country": "France" }
     ],
-    'pets': ['duck', 'whale']
+    "pets": ["duck", "whale"]
   }`
 
   document.getElementById('jsonstr').value = sampleJSON
