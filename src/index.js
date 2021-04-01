@@ -110,7 +110,12 @@ const crawlJson = (jsonObj, parentId, label, newNodes, newEdges, level) => {
     )
   } else {
     if (showLeaves) {
-      newNodes.push({ id: nodeId, level, shape: 'diamond', label: jsonObj })
+      newNodes.push({
+        id: nodeId,
+        level,
+        shape: 'diamond',
+        label: jsonObj.toString()
+      })
     }
   }
 }
