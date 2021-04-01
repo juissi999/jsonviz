@@ -2,6 +2,18 @@ import { Network } from 'vis-network'
 import { DataSet } from 'vis-data'
 import { crawlJson } from './crawler'
 
+const STYLES = {
+  ROOTCOLOR: '#a8b6dd',
+  ARRAYCOLOR: '#6E6EFD',
+  OBJECTCOLOR: '#fcfcab', //'#FFFF00'
+  EMPTYCOLOR: '#FB7E81',
+  LEAFCOLOR: '#C2FABC',
+  ARRAYSHAPE: 'box',
+  OBJECTSHAPE: 'circle',
+  LEAFSHAPE: 'ellipse',
+  ROOTFONT: { size: 25 }
+}
+
 const createGraph = (jsonStrRaw) => {
   const container = document.getElementById('app')
 
@@ -28,7 +40,7 @@ const createGraph = (jsonStrRaw) => {
     const showLeaves = document.getElementById('leaveschkbx').checked
     const newNodes = []
     const newEdges = []
-    crawlJson(myJson, null, null, newNodes, newEdges, 0, showLeaves)
+    crawlJson(myJson, null, null, newNodes, newEdges, 0, showLeaves, STYLES)
 
     // create an array for nodes
     const nodes = new DataSet(newNodes)

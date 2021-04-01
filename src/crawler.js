@@ -1,17 +1,5 @@
 import { v4 } from 'uuid'
 
-const ROOTCOLOR = '#a8b6dd'
-const ARRAYCOLOR = '#6E6EFD'
-const OBJECTCOLOR = '#fcfcab'
-const EMPTYCOLOR = '#FB7E81'
-const LEAFCOLOR = '#C2FABC'
-
-const ARRAYSHAPE = 'box'
-const OBJECTSHAPE = 'circle'
-const LEAFSHAPE = 'ellipse'
-
-const ROOTFONT = { size: 25 }
-
 const crawlJson = (
   jsonObj,
   parentId,
@@ -19,7 +7,8 @@ const crawlJson = (
   newNodes,
   newEdges,
   level,
-  showLeaves
+  showLeaves,
+  styles
 ) => {
   // recursive crawling function that goes through JSON
 
@@ -32,35 +21,48 @@ const crawlJson = (
     newEdges.push({ from: parentId, to: nodeId, arrows: 'to', label })
   }
 
-  const newNode = { id: nodeId, level, font: parentId ? undefined : ROOTFONT }
+  const newNode = {
+    id: nodeId,
+    level,
+    font: parentId ? undefined : styles.ROOTFONT
+  }
 
   // process different node-types of JSON
   if (isArray) {
-    let color = ARRAYCOLOR
+    let color = styles.ARRAYCOLOR
     if (jsonObj.length === 0) {
-      color = EMPTYCOLOR
+      color = styles.EMPTYCOLOR
     }
 
     newNodes.push({
       ...newNode,
       label: 'Array',
-      shape: ARRAYSHAPE,
-      color: parentId ? color : ROOTCOLOR
+      shape: styles.ARRAYSHAPE,
+      color: parentId ? color : styles.ROOTCOLOR
     })
     jsonObj.map((item) =>
-      crawlJson(item, nodeId, null, newNodes, newEdges, level + 1, showLeaves)
+      crawlJson(
+        item,
+        nodeId,
+        null,
+        newNodes,
+        newEdges,
+        level + 1,
+        showLeaves,
+        styles
+      )
     )
   } else if (isObj) {
-    let color = OBJECTCOLOR //'#FFFF00'
+    let color = styles.OBJECTCOLOR
     if (Object.keys(jsonObj).length === 0) {
-      color = EMPTYCOLOR
+      color = styles.EMPTYCOLOR
     }
 
     newNodes.push({
       ...newNode,
       label: 'Object',
-      color: parentId ? color : ROOTCOLOR,
-      shape: OBJECTSHAPE
+      color: parentId ? color : styles.ROOTCOLOR,
+      shape: styles.OBJECTSHAPE
     })
     const keys = Object.keys(jsonObj)
     keys.map((key) =>
@@ -71,15 +73,16 @@ const crawlJson = (
         newNodes,
         newEdges,
         level + 1,
-        showLeaves
+        showLeaves,
+        styles
       )
     )
   } else {
     if (showLeaves) {
       newNodes.push({
         ...newNode,
-        color: LEAFCOLOR,
-        shape: LEAFSHAPE,
+        color: styles.LEAFCOLOR,
+        shape: styles.LEAFSHAPE,
         label: jsonObj.toString()
       })
     }
