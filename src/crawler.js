@@ -10,6 +10,8 @@ const ARRAYSHAPE = 'box'
 const OBJECTSHAPE = 'circle'
 const LEAFSHAPE = 'ellipse'
 
+const ROOTFONT = { size: 25 }
+
 const crawlJson = (
   jsonObj,
   parentId,
@@ -43,8 +45,7 @@ const crawlJson = (
       label: 'Array',
       shape: ARRAYSHAPE,
       color: parentId ? color : ROOTCOLOR,
-      heightConstraint: parentId ? undefined : { minimum: 100 },
-      widthConstraint: parentId ? undefined : { minimum: 100 }
+      font: parentId ? undefined : ROOTFONT
     })
     jsonObj.map((item) =>
       crawlJson(item, nodeId, null, newNodes, newEdges, level + 1, showLeaves)
@@ -60,6 +61,7 @@ const crawlJson = (
       level,
       label: 'Object',
       color: parentId ? color : ROOTCOLOR,
+      font: parentId ? undefined : ROOTFONT,
       shape: OBJECTSHAPE
     })
     const keys = Object.keys(jsonObj)
@@ -81,6 +83,7 @@ const crawlJson = (
         level,
         color: LEAFCOLOR,
         shape: LEAFSHAPE,
+        font: parentId ? undefined : ROOTFONT,
         label: jsonObj.toString()
       })
     }
