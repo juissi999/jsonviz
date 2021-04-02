@@ -52,17 +52,22 @@ const refreshGraph = () => {
   }
 }
 
-// define callback-functions for DOM-elements
-document.getElementById('createbtn').addEventListener('click', refreshGraph)
-document.getElementById('clearbtn').addEventListener('click', () => {
-  document.getElementById('jsonstr').value = ''
-  renderGraph('')
-})
-document.getElementById('leavesselect').addEventListener('change', refreshGraph)
-document
-  .getElementById('hierarchychkbx')
-  .addEventListener('change', refreshGraph)
+window.addEventListener('load', () => {
+  // define callback-functions for DOM-elements
+  document.getElementById('createbtn').addEventListener('click', refreshGraph)
+  document.getElementById('clearbtn').addEventListener('click', () => {
+    document.getElementById('jsonstr').value = ''
+    document.getElementById('statustxt').textContent = ''
+    renderGraph(document.getElementById('app'), '', false, false, STYLES)
+  })
+  document
+    .getElementById('leavesselect')
+    .addEventListener('change', refreshGraph)
+  document
+    .getElementById('hierarchychkbx')
+    .addEventListener('change', refreshGraph)
 
-// initial graph
-resetTextBox()
-refreshGraph()
+  // initial graph
+  resetTextBox()
+  refreshGraph()
+})
