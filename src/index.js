@@ -11,6 +11,7 @@ const STYLES = {
   ARRAYSHAPE: 'box',
   OBJECTSHAPE: 'circle',
   LEAFSHAPE: 'ellipse',
+  LEAFLABEL: true,
   ROOTFONT: { size: 25 }
 }
 

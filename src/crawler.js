@@ -83,7 +83,7 @@ const crawlJson = (
         ...newNode,
         color: styles.LEAFCOLOR,
         shape: styles.LEAFSHAPE,
-        label: jsonObj.toString()
+        label: styles.LEAFLABEL ? jsonObj.toString() : undefined
       })
     }
   }
