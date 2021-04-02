@@ -13,10 +13,6 @@ const STYLES = {
   ROOTFONT: { size: 25 }
 }
 
-const container = document.getElementById('app')
-const hierarchical = () => document.getElementById('hierarchychkbx').checked
-const showLeaves = () => document.getElementById('leaveschkbx').checked
-
 const resetTextBox = () => {
   const sampleJSON = `{
     "cities": [
@@ -32,10 +28,10 @@ const resetTextBox = () => {
 
 const refreshGraph = () =>
   renderGraph(
-    container,
+    document.getElementById('app'),
     document.getElementById('jsonstr').value,
-    hierarchical(),
-    showLeaves(),
+    document.getElementById('hierarchychkbx').checked,
+    document.getElementById('leaveschkbx').checked,
     STYLES
   )
 
