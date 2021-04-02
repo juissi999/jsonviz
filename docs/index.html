@@ -6,7 +6,7 @@
 </head>
 <body>
   <h2>jsonviz</h2>
-  Display JSON structure graphically.
+  Display JSON structure graphically. <span id="statustxt" class="error"></span>
   <div class="block">
     <textarea id="jsonstr" rows="4" cols="50">
     </textarea>
@@ -35,6 +35,9 @@
     .block {
       margin-top:10px;
       margin-bottom:10px;
+    }
+    .error {
+      color:red;
     }
   </style>
 </body>

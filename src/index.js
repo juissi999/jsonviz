@@ -32,6 +32,7 @@ const refreshGraph = () => {
 
   try {
     // try to parse JSON, if it fails, catch it
+    document.getElementById('statustxt').textContent = ''
     const jsonObj = JSON.parse(document.getElementById('jsonstr').value)
 
     // clean the JSON for textbox
@@ -46,7 +47,7 @@ const refreshGraph = () => {
     )
   } catch (error) {
     // something went wrong, create empty graph
-    console.log(error)
+    document.getElementById('statustxt').textContent = `${error}`
 
     renderGraph(
       document.getElementById('app'),
