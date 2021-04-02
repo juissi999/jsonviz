@@ -15,11 +15,16 @@ const STYLES = {
 const resetTextBox = () => {
   const sampleJSON = `{
     "cities": [
-      { "name": "Helsinki", "country": "Finland" },
-      { "name": "Berlin", "country": "Germany" },
-      { "name": "Paris", "country": "France" }
+      { "name": "Helsinki", "country": "Finland", "employees": ["Heidi", "Mika"] },
+      { "name": "Berlin", "country": "Germany", "employees":[] },
+      { "name": "Paris", "country": "France", "employees":["Michelle"] }
     ],
-    "pets": ["duck", "whale"]
+    "pets": ["duck", "whale"],
+    "cars": [
+      {"Volkswagen":{"stock":null, "available":false}},
+      {"Tesla":{"stock":3,"available":true}},
+      {"Renault":{"stock":2, "available":true}}
+    ]
   }`
 
   document.getElementById('jsonstr').value = sampleJSON
