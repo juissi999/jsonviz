@@ -7,7 +7,7 @@ const crawlJson = (
   newNodes,
   newEdges,
   level,
-  showLeaves,
+  leafStyle,
   styles
 ) => {
   // recursive crawling function that goes through JSON
@@ -48,7 +48,7 @@ const crawlJson = (
         newNodes,
         newEdges,
         level + 1,
-        showLeaves,
+        leafStyle,
         styles
       )
     )
@@ -73,17 +73,17 @@ const crawlJson = (
         newNodes,
         newEdges,
         level + 1,
-        showLeaves,
+        leafStyle,
         styles
       )
     )
   } else {
-    if (showLeaves) {
+    if (['show', 'value'].find((el) => el === leafStyle)) {
       newNodes.push({
         ...newNode,
         color: styles.LEAFCOLOR,
         shape: styles.LEAFSHAPE,
-        label: styles.LEAFLABEL ? jsonObj.toString() : undefined
+        label: leafStyle === 'value' ? jsonObj.toString() : undefined
       })
     }
   }

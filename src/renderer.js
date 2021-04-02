@@ -2,7 +2,7 @@ import { Network } from 'vis-network'
 import { DataSet } from 'vis-data'
 import { crawlJson } from './crawler'
 
-const renderGraph = (container, jsonObj, hierarchical, showLeaves, STYLES) => {
+const renderGraph = (container, jsonObj, hierarchical, leafStyle, STYLES) => {
   let options = {}
 
   // if hierarchical selected, change options
@@ -18,7 +18,7 @@ const renderGraph = (container, jsonObj, hierarchical, showLeaves, STYLES) => {
 
   const newNodes = []
   const newEdges = []
-  crawlJson(jsonObj, null, null, newNodes, newEdges, 0, showLeaves, STYLES)
+  crawlJson(jsonObj, null, null, newNodes, newEdges, 0, leafStyle, STYLES)
 
   // create an array for nodes
   const nodes = new DataSet(newNodes)

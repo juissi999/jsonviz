@@ -9,7 +9,6 @@ const STYLES = {
   ARRAYSHAPE: 'box',
   OBJECTSHAPE: 'circle',
   LEAFSHAPE: 'ellipse',
-  LEAFLABEL: true,
   ROOTFONT: { size: 25 }
 }
 
@@ -42,20 +41,14 @@ const refreshGraph = () => {
       document.getElementById('app'),
       jsonObj,
       document.getElementById('hierarchychkbx').checked,
-      document.getElementById('leaveschkbx').checked,
+      document.getElementById('leavesselect').value,
       STYLES
     )
   } catch (error) {
     // something went wrong, create empty graph
     document.getElementById('statustxt').textContent = `${error}`
 
-    renderGraph(
-      document.getElementById('app'),
-      '',
-      document.getElementById('hierarchychkbx').checked,
-      document.getElementById('leaveschkbx').checked,
-      STYLES
-    )
+    renderGraph(document.getElementById('app'), '', false, false, STYLES)
   }
 }
 
@@ -65,7 +58,7 @@ document.getElementById('clearbtn').addEventListener('click', () => {
   document.getElementById('jsonstr').value = ''
   renderGraph('')
 })
-document.getElementById('leaveschkbx').addEventListener('change', refreshGraph)
+document.getElementById('leavesselect').addEventListener('change', refreshGraph)
 document
   .getElementById('hierarchychkbx')
   .addEventListener('change', refreshGraph)
