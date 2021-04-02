@@ -79,11 +79,17 @@ const crawlJson = (
     )
   } else {
     if (['show', 'value'].find((el) => el === leafStyle)) {
+      // eliminate null value doesnt have toString()-method
+      const valueStr = jsonObj ? jsonObj.toString() : 'null'
+
+      // if of type string, add quotes to make it easier to detect type
+      const formattedValueStr = isString(jsonObj) ? `'${valueStr}'` : valueStr
+
       newNodes.push({
         ...newNode,
         color: styles.LEAFCOLOR,
         shape: styles.LEAFSHAPE,
-        label: leafStyle === 'value' ? jsonObj.toString() : undefined
+        label: leafStyle === 'value' ? formattedValueStr : undefined
       })
     }
   }
@@ -92,6 +98,10 @@ const crawlJson = (
 const isObject = (obj) => {
   // test if object is an object and not e.g. array, return bool
   return Object.prototype.toString.call(obj) === '[object Object]'
+}
+
+const isString = (obj) => {
+  return Object.prototype.toString.call(obj) === '[object String]'
 }
 
 export { crawlJson }
