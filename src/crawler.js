@@ -80,7 +80,7 @@ const crawlJson = (
   } else {
     if (['show', 'value'].find((el) => el === leafStyle)) {
       // eliminate null value doesnt have toString()-method
-      const valueStr = jsonObj ? jsonObj.toString() : 'null'
+      const valueStr = jsonObj === null ? 'null' : jsonObj.toString()
 
       // if of type string, add quotes to make it easier to detect type
       const formattedValueStr = isString(jsonObj) ? `'${valueStr}'` : valueStr
