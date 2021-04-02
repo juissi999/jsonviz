@@ -26,14 +26,37 @@ const resetTextBox = () => {
   document.getElementById('jsonstr').value = sampleJSON
 }
 
-const refreshGraph = () =>
-  renderGraph(
-    document.getElementById('app'),
-    document.getElementById('jsonstr').value,
-    document.getElementById('hierarchychkbx').checked,
-    document.getElementById('leaveschkbx').checked,
-    STYLES
-  )
+const refreshGraph = () => {
+  // preprocess JSON in case it would use ' instead of "
+  // jsonStrRaw = jsonStrRaw.replace(/\'/g, '"')
+
+  try {
+    // try to parse JSON, if it fails, catch it
+    const jsonObj = JSON.parse(document.getElementById('jsonstr').value)
+
+    // clean the JSON for textbox
+    document.getElementById('jsonstr').value = JSON.stringify(jsonObj, null, 2)
+
+    renderGraph(
+      document.getElementById('app'),
+      jsonObj,
+      document.getElementById('hierarchychkbx').checked,
+      document.getElementById('leaveschkbx').checked,
+      STYLES
+    )
+  } catch (error) {
+    // something went wrong, create empty graph
+    console.log(error)
+
+    renderGraph(
+      document.getElementById('app'),
+      '',
+      document.getElementById('hierarchychkbx').checked,
+      document.getElementById('leaveschkbx').checked,
+      STYLES
+    )
+  }
+}
 
 // define callback-functions for DOM-elements
 document.getElementById('createbtn').addEventListener('click', refreshGraph)
