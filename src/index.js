@@ -21,9 +21,9 @@ const resetTextBox = () => {
     ],
     "pets": ["duck", "whale"],
     "cars": [
-      {"Volkswagen":{"stock":null, "available":false}},
-      {"Tesla":{"stock":3,"available":true}},
-      {"Renault":{"stock":2, "available":true}}
+      {"Manufacturer":"Volkswagen", "stock":null, "available":false},
+      {"Manufacturer":"Tesla", "stock":3,"available":true},
+      {"Manufacturer":"Renault", "stock":2, "available":true}
     ]
   }`
 
