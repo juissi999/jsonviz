@@ -1,4 +1,5 @@
 import renderGraph from './renderer'
+import { crawlJson } from './crawler'
 
 const STYLES = {
   ROOTCOLOR: '#a8b6dd',
@@ -42,18 +43,32 @@ const refreshGraph = () => {
     // clean the JSON for textbox
     document.getElementById('jsonstr').value = JSON.stringify(jsonObj, null, 2)
 
-    renderGraph(
-      document.getElementById('app'),
+    // crawl json
+    const newNodes = []
+    const newEdges = []
+    crawlJson(
       jsonObj,
-      document.getElementById('hierarchychkbx').checked,
+      null,
+      null,
+      newNodes,
+      newEdges,
+      0,
       document.getElementById('leavesselect').value,
       STYLES
+    )
+
+    // render graph
+    renderGraph(
+      document.getElementById('app'),
+      newNodes,
+      newEdges,
+      document.getElementById('hierarchychkbx').checked
     )
   } catch (error) {
     // something went wrong, create empty graph
     document.getElementById('statustxt').textContent = `${error}`
 
-    renderGraph(document.getElementById('app'), '', false, false, STYLES)
+    renderGraph(document.getElementById('app'), [], [], false)
   }
 }
 
@@ -63,7 +78,7 @@ window.addEventListener('load', () => {
   document.getElementById('clearbtn').addEventListener('click', () => {
     document.getElementById('jsonstr').value = ''
     document.getElementById('statustxt').textContent = ''
-    renderGraph(document.getElementById('app'), '', false, false, STYLES)
+    renderGraph(document.getElementById('app'), [], [], false)
   })
   document
     .getElementById('leavesselect')
