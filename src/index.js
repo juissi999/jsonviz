@@ -1,5 +1,6 @@
 import renderGraph from './renderer'
 import { crawlJson } from './crawler'
+import './style.css'
 
 const STYLES = {
   ROOTCOLOR: '#a8b6dd',
