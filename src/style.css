@@ -15,6 +15,7 @@
 }
 #jsonstr {
   width:100%;
+  box-sizing: border-box;
 }
 .block {
   margin-top:10px;
