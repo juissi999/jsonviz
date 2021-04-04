@@ -6,35 +6,7 @@
   <title>jsonviz</title>
 </head>
 <body>
-  <div class="container">
-    <h2>jsonviz</h2>
-    Display JSON structure graphically. <span id="statustxt" class="error"></span>
-    <div class="block">
-      <textarea id="jsonstr" rows="6">
-      </textarea>
-    </div>
-    <div class="block">
-      Leaf mode 
-      <select name="leaves" id="leavesselect">
-        <option value="hide">hide</option>
-        <option value="show">show</option>
-        <option value="value">show value</option>
-      </select>
-    </div>
-    <div class="block">
-      <input type="checkbox" id="hierarchychkbx"> <label for="hierarchychkbx">Hierarchical</label>
-    </div>
-    <div class="block">
-      <button id="createbtn">Create graph</button>
-      <button id="clearbtn">Clear textbox</button>
-      <button id="helpbtn">Help</button>
-    </div>
-    
-    <div id="app"></div>
-    <div class="block">
-      <a href="https://github.com/juissi999/jsonviz">juissi999@github</a>
-    </div>
-  </div>
+  <div id="app"></div>
   <script type="text/javascript" src="main.js">
   </script>
 </body>
