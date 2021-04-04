@@ -15,6 +15,8 @@ const STYLES = {
   ROOTFONT: { size: 25 }
 }
 
+const APPID = 'app'
+
 const resetTextBox = () => {
   const sampleJSON = `{
     "cities": [
@@ -76,7 +78,7 @@ const refreshGraph = () => {
 
 window.addEventListener('load', () => {
   // define callback-functions for DOM-elements
-  createLayout('app')
+  createLayout(APPID)
   document.getElementById('createbtn').addEventListener('click', refreshGraph)
   document.getElementById('clearbtn').addEventListener('click', () => {
     document.getElementById('jsonstr').value = ''
@@ -138,19 +140,16 @@ const createLayout = (elId) => {
   const block4 = document.createElement('div')
   block4.setAttribute('class', 'block')
   block4.innerHTML = `
-    <div class="block">
-      <input type="checkbox" id="hierarchychkbx"> <label for="hierarchychkbx">Hierarchical</label>
-    </div>`
+    <input type="checkbox" id="hierarchychkbx">
+    <label for="hierarchychkbx">Hierarchical</label>`
   container.appendChild(block4)
 
   const block5 = document.createElement('div')
   block5.setAttribute('class', 'block')
   block5.innerHTML = `
-    <div class="block">
       <button id="createbtn">Create graph</button>
       <button id="clearbtn">Clear textbox</button>
-      <button id="helpbtn">Help</button>
-    </div>`
+      <button id="helpbtn">Help</button>`
   container.appendChild(block5)
 
   const graph = document.createElement('div')
