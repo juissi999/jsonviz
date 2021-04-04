@@ -1,5 +1,6 @@
 import renderGraph from './renderer'
 import { crawlJson } from './crawler'
+import { helpNodes, helpEdges } from './help'
 import './style.css'
 
 const STYLES = {
@@ -88,60 +89,12 @@ window.addEventListener('load', () => {
     .getElementById('hierarchychkbx')
     .addEventListener('change', refreshGraph)
   document.getElementById('helpbtn').addEventListener('click', () => {
-    const nodes = [
-      { label: 'rootnode', color: STYLES.ROOTCOLOR, font: STYLES.ROOTFONT },
-      { label: 'array', color: STYLES.ARRAYCOLOR, shape: STYLES.ARRAYSHAPE },
-      { label: 'object', color: STYLES.OBJECTCOLOR, shape: STYLES.OBJECTSHAPE },
-      {
-        label: 'empty array',
-        color: STYLES.EMPTYCOLOR,
-        shape: STYLES.ARRAYSHAPE
-      },
-      {
-        label: 'empty object',
-        color: STYLES.EMPTYCOLOR,
-        shape: STYLES.OBJECTSHAPE
-      },
-      { label: 'leaf', color: STYLES.LEAFCOLOR, shape: STYLES.LEAFSHAPE },
-      {
-        label: 'Leaftypes',
-        color: STYLES.OBJECTCOLOR,
-        shape: STYLES.OBJECTSHAPE,
-        id: '1'
-      },
-      {
-        label: `'Hello World!'`,
-        color: STYLES.LEAFCOLOR,
-        shape: STYLES.LEAFSHAPE,
-        id: '2'
-      },
-      {
-        label: `25`,
-        color: STYLES.LEAFCOLOR,
-        shape: STYLES.LEAFSHAPE,
-        id: '3'
-      },
-      {
-        label: `true`,
-        color: STYLES.LEAFCOLOR,
-        shape: STYLES.LEAFSHAPE,
-        id: '4'
-      },
-      {
-        label: `null`,
-        color: STYLES.LEAFCOLOR,
-        shape: STYLES.LEAFSHAPE,
-        id: '5'
-      }
-    ]
-    const edges = [
-      { from: '1', to: '2', label: 'string' },
-      { from: '1', to: '3', label: 'number' },
-      { from: '1', to: '4', label: 'boolean' },
-      { from: '1', to: '5', label: 'null' }
-    ]
-
-    renderGraph(document.getElementById('app'), nodes, edges, false)
+    renderGraph(
+      document.getElementById('app'),
+      helpNodes(STYLES),
+      helpEdges(STYLES),
+      false
+    )
   })
 
   // initial graph
