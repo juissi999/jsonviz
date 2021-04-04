@@ -56,4 +56,18 @@ const helpEdges = (STYLES) => {
   ]
 }
 
-export { helpNodes, helpEdges }
+const sampleJSON = `{
+  "cities": [
+    { "name": "Helsinki", "country": "Finland", "employees": ["Heidi", "Mika"] },
+    { "name": "Berlin", "country": "Germany", "employees":[] },
+    { "name": "Paris", "country": "France", "employees":["Michelle"] }
+  ],
+  "pets": ["duck", "whale"],
+  "cars": [
+    {"Manufacturer":"Volkswagen", "stock":null, "available":false},
+    {"Manufacturer":"Tesla", "stock":3,"available":true},
+    {"Manufacturer":"Renault", "stock":2, "available":true}
+  ]
+}`
+
+export { helpNodes, helpEdges, sampleJSON }

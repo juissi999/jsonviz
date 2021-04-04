@@ -1,6 +1,6 @@
 import renderGraph from './renderer'
 import { crawlJson } from './crawler'
-import { helpNodes, helpEdges } from './help'
+import { helpNodes, helpEdges, sampleJSON } from './help'
 import './style.css'
 
 const STYLES = {
@@ -18,20 +18,6 @@ const STYLES = {
 const APPID = 'app'
 
 const resetTextBox = () => {
-  const sampleJSON = `{
-    "cities": [
-      { "name": "Helsinki", "country": "Finland", "employees": ["Heidi", "Mika"] },
-      { "name": "Berlin", "country": "Germany", "employees":[] },
-      { "name": "Paris", "country": "France", "employees":["Michelle"] }
-    ],
-    "pets": ["duck", "whale"],
-    "cars": [
-      {"Manufacturer":"Volkswagen", "stock":null, "available":false},
-      {"Manufacturer":"Tesla", "stock":3,"available":true},
-      {"Manufacturer":"Renault", "stock":2, "available":true}
-    ]
-  }`
-
   document.getElementById('jsonstr').value = sampleJSON
 }
 
