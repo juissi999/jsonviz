@@ -66,26 +66,12 @@ const refreshGraph = () => {
 window.addEventListener('load', () => {
   // define callback-functions for DOM-elements
   createLayout(APPID)
-  document.getElementById('createbtn').addEventListener('click', refreshGraph)
-  document.getElementById('clearbtn').addEventListener('click', () => {
-    document.getElementById('jsonstr').value = ''
-    document.getElementById('statustxt').textContent = ''
-    renderGraph(document.getElementById('graph'), [], [], false)
-  })
   document
     .getElementById('leavesselect')
     .addEventListener('change', refreshGraph)
   document
     .getElementById('hierarchychkbx')
     .addEventListener('change', refreshGraph)
-  document.getElementById('helpbtn').addEventListener('click', () => {
-    renderGraph(
-      document.getElementById('graph'),
-      helpNodes(STYLES),
-      helpEdges(STYLES),
-      false
-    )
-  })
 
   // initial graph
   resetTextBox()
@@ -103,18 +89,18 @@ const createLayout = (elId) => {
   container.appendChild(title)
 
   const block1 = document.createElement('div')
-  block1.setAttribute('class', 'block')
+  block1.setAttribute('class', 'my-2')
   block1.innerHTML =
     'Display JSON structure graphically. <span id="statustxt" class="error"></span>'
   container.appendChild(block1)
 
   const block2 = document.createElement('div')
-  block2.setAttribute('class', 'block')
+  block2.setAttribute('class', 'my-2')
   block2.innerHTML = '<textarea id="jsonstr" rows="6"></textarea>'
   container.appendChild(block2)
 
   const block3 = document.createElement('div')
-  block3.setAttribute('class', 'block')
+  block3.setAttribute('class', 'my-2')
   block3.innerHTML = `
     Leaf mode 
     <select name="leaves" id="leavesselect">
@@ -125,29 +111,52 @@ const createLayout = (elId) => {
   container.appendChild(block3)
 
   const block4 = document.createElement('div')
-  block4.setAttribute('class', 'block')
+  block4.setAttribute('class', 'my-2')
   block4.innerHTML = `
     <input type="checkbox" id="hierarchychkbx">
     <label for="hierarchychkbx">Hierarchical</label>`
   container.appendChild(block4)
 
   const block5 = document.createElement('div')
-  block5.setAttribute('class', 'block')
-  block5.innerHTML = `
-      <button id="createbtn">Create graph</button>
-      <button id="clearbtn">Clear textbox</button>
-      <button id="helpbtn">Help</button>`
+  block5.setAttribute('class', 'my-2')
+
+  block5.appendChild(createButton('Create graph', refreshGraph))
+  block5.appendChild(
+    createButton('Clear textbox', () => {
+      document.getElementById('jsonstr').value = ''
+      document.getElementById('statustxt').textContent = ''
+      renderGraph(document.getElementById('graph'), [], [], false)
+    })
+  )
+  block5.appendChild(
+    createButton('Help', () => {
+      renderGraph(
+        document.getElementById('graph'),
+        helpNodes(STYLES),
+        helpEdges(STYLES),
+        false
+      )
+    })
+  )
   container.appendChild(block5)
 
   const graph = document.createElement('div')
-  graph.setAttribute('class', 'block')
+  graph.setAttribute('class', 'my-2')
   graph.setAttribute('id', 'graph')
   container.appendChild(graph)
 
   const block6 = document.createElement('div')
-  block6.setAttribute('class', 'block')
+  block6.setAttribute('class', 'my-2')
   block6.innerHTML = `<a href="https://github.com/juissi999/jsonviz">juissi999@github</a>`
   container.appendChild(block6)
 
   app.appendChild(container)
+}
+
+const createButton = (txt, callback) => {
+  const btn = document.createElement('button')
+  btn.appendChild(document.createTextNode(txt))
+  btn.addEventListener('click', callback)
+  btn.setAttribute('class', 'mr-1')
+  return btn
 }

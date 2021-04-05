@@ -8,10 +8,6 @@
   width:100%;
   box-sizing: border-box;
 }
-.block {
-  margin-top:10px;
-  margin-bottom:10px;
-}
 .error {
   color:red;
 }
