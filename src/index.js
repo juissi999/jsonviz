@@ -1,6 +1,7 @@
 import renderGraph from './renderer'
 import { crawlJson } from './crawler'
 import { helpNodes, helpEdges, sampleJSON } from './help'
+import 'juicycss/index.css'
 import './style.css'
 
 const STYLES = {
