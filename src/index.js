@@ -114,7 +114,7 @@ const createLayout = (elId) => {
   block4.setAttribute('class', 'my-2')
   block4.innerHTML = `
     <input type="checkbox" id="hierarchychkbx">
-    <label for="hierarchychkbx">Hierarchical</label>`
+    <label for="hierarchychkbx" class="nonselectable">Hierarchical</label>`
   container.appendChild(block4)
 
   const block5 = document.createElement('div')
