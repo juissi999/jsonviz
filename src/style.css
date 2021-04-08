@@ -4,17 +4,14 @@
   height: 800px;
   border: 1px solid lightgray;
 }
+
 #jsonstr {
-  width:100%;
+  width: 100%;
   box-sizing: border-box;
 }
-.error {
-  color:red;
-}
 
-.nonselectable {
-  -webkit-user-select: none;
-  user-select: none;
+.error {
+  color: red;
 }
 
 /* Extra small devices (phones, 600px and down) */
@@ -25,9 +22,7 @@
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-}
+@media only screen and (min-width: 600px) {}
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-}
+@media only screen and (min-width: 768px) {}
