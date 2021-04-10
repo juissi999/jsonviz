@@ -120,9 +120,7 @@ const createLayout = (elId) => {
   const block5 = document.createElement('div')
   block5.setAttribute('class', 'my-2')
 
-  block5.appendChild(
-    createButton('Create graph', 'lightblue text-white', refreshGraph)
-  )
+  block5.appendChild(createButton('Create graph', '', refreshGraph))
   block5.appendChild(
     createButton('Clear textbox', 'yellow', () => {
       document.getElementById('jsonstr').value = ''
@@ -159,6 +157,6 @@ const createButton = (txt, classes, callback) => {
   const btn = document.createElement('button')
   btn.appendChild(document.createTextNode(txt))
   btn.addEventListener('click', callback)
-  btn.setAttribute('class', 'mr-1 mw-2 pointer ' + classes)
+  btn.setAttribute('class', 'mr-1 my-1 mw-2 pointer ' + classes)
   return btn
 }

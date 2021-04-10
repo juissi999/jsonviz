@@ -22,13 +22,13 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "css-loader": "^5.2.0",
-    "juicycss": "0.0.3",
+    "css-loader": "^5.2.1",
+    "juicycss": "0.0.4",
     "style-loader": "^2.0.0",
     "uuid": "^8.3.2",
     "vis-data": "^7.1.2",
     "vis-network": "^9.0.4",
-    "webpack": "^5.31.0",
+    "webpack": "^5.31.2",
     "webpack-cli": "^4.6.0"
   }
 }
