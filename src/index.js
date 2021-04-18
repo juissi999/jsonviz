@@ -122,14 +122,14 @@ const createLayout = (elId) => {
 
   block5.appendChild(createButton('Create graph', '', refreshGraph))
   block5.appendChild(
-    createButton('Clear textbox', 'yellow', () => {
+    createButton('Clear textbox', 'jyellow', () => {
       document.getElementById('jsonstr').value = ''
       document.getElementById('statustxt').textContent = ''
       renderGraph(document.getElementById('graph'), [], [], false)
     })
   )
   block5.appendChild(
-    createButton('Help', 'green', () => {
+    createButton('Help', 'jgreen', () => {
       renderGraph(
         document.getElementById('graph'),
         helpNodes(STYLES),
